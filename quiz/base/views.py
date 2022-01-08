@@ -1,11 +1,19 @@
-from django.shortcuts import render
-
+from django.shortcuts import render, redirect
 
 # Create your views here.
+from quiz.base.forms import AlunoForm
 from quiz.base.models import Pergunta
 
 
 def home(request):  # como funciona a requisução/request ?
+    if request.method == "POST":
+        formulario = AlunoForm(request.POST)
+        if formulario.is_valid():
+            aluno = formulario.save()
+            return redirect('/perguntas/1')
+        else:
+            contexto = {'formulario': formulario}
+            return render(request, 'base/home.html', contexto)
     return render(request, 'base/home.html')
 
 
