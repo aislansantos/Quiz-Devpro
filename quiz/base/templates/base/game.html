@@ -22,10 +22,14 @@
                     <h3>{{ pergunta.enunciado }}</h3>
 
                     {% for alternativa in pergunta.alternativas.array %}
-                    <div class="choice-container">
-                        <p class="choice-prefix">{% cycle 'A' 'B' 'C' 'D' %}</p>
-                        <p class="choice-text">{{ alternativa }}</p>
-                    </div>
+                    <form  method="post" action="/perguntas/{{indice_da_questao}}">
+                        {% csrf_token %}
+                        <input type="hidden" value="{{ forloop.counter0 }}"> <!-- forloop.counter0 variavel que vai iterando o valor das contagens pra gente em que passo está dentro do For -->
+                        <div class="choice-container">
+                            <p class="choice-prefix">{% cycle 'A' 'B' 'C' 'D' %}</p>
+                            <p class="choice-text">{{ alternativa }}</p>
+                        </div>
+                    </form>
                     {% endfor %}
 
                 </div>
